@@ -1,22 +1,28 @@
-import { takeEvery, put, call } from "redux-saga/effects";
-import { successUsers } from "../actions/usersActions";
+import { all, fork, call, put } from "redux-saga/effects";
+import {
+  requestProducts,
+  successProducts,
+  failProducts,
+} from "../actions/productsActions";
 
-export default function* sagaWatcher() {
-  yield takeEvery("request", sagaWorker);
+export default function* rootSaga() {
+  yield all([fork(getProducts)]);
 }
 
-function* sagaWorker() {
-  const data = yield call(getProducts);
-  console.log("hi");
-  yield put(successUsers(data));
+function* getProducts() {
+  try {
+    yield put(requestProducts());
+    const products = yield call(fetchProducts);
+    yield put(successProducts(products));
+  } catch (e) {
+    yield put(failProducts(e.message));
+  }
 }
 
-const getProducts = async () => {
-  const data = await fetch("https://jsonplaceholder.typicode.com/users").then(
-    (res) => {
-      return res.json();
-    }
-  );
+const fetchProducts = async () => {
+  const data = await fetch("http://localhost:4000/products").then((res) => {
+    return res.json();
+  });
 
   console.log(data);
 

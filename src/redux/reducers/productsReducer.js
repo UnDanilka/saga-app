@@ -13,14 +13,14 @@ export const productsReducer = (state = initialState, action) => {
       };
     case "success":
       return {
-        users: action.payload,
+        products: action.payload,
         error: "",
         loading: false,
       };
     case "fail":
       return {
         ...state,
-        users: [],
+        products: [],
         error: action.payload,
       };
     default:

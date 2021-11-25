@@ -1,0 +1,9 @@
+{
+    "products": [
+        {"name": "first", "email": "first@gmail.com", "count": 1, "price": 10, "delivery": {"country": "Russia", "cities": ["Kazan"]}},
+        {"name": "second", "email": "second@gmail.com", "count": 2, "price": 20, "delivery": {"country": "Russia", "cities": ["Moscow"]}},
+        {"name": "third", "email": "third@gmail.com", "count": 3, "price": 30, "delivery": {"country": "Russia", "cities": ["Saratov"]}},
+        {"name": "fourth", "email": "fourth@gmail.com", "count": 4, "price": 40, "delivery": null},
+        {"name": "fifth", "email": "fifth@gmail.com", "count": 5, "price": 50, "delivery": null}
+    ]
+}
