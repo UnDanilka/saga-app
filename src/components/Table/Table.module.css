@@ -1,0 +1,17 @@
+.main_table {
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  background-color: rgba(127, 255, 255, 0.253);
+}
+
+.header_item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  font-weight: 600;
+  border: 1px solid rgba(121, 117, 117, 0.336);
+}

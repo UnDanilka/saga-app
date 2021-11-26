@@ -1,0 +1,29 @@
+.row_item {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(121, 117, 117, 0.336);
+  border-left: 1px solid rgba(121, 117, 117, 0.336);
+  border-right: 1px solid rgba(121, 117, 117, 0.336);
+  height: 50px;
+}
+
+.row_item_name {
+  padding-left: 10px;
+}
+
+.row_item_name:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  color: rgb(48, 17, 228);
+}
+
+.row_item_price {
+  display: flex;
+  justify-content: center;
+}
+
+.row_item_actions {
+  display: flex;
+  justify-content: space-around;
+}

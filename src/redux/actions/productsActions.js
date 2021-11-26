@@ -17,3 +17,10 @@ export const failProducts = (error) => {
     payload: error,
   };
 };
+
+export const deleteProduct = (name) => {
+  return {
+    type: "delete",
+    payload: name,
+  };
+};

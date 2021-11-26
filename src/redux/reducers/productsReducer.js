@@ -23,6 +23,16 @@ export const productsReducer = (state = initialState, action) => {
         products: [],
         error: action.payload,
       };
+    case "delete":
+      const prevProducts = [...state.products];
+      const currProducts = prevProducts.filter(
+        (product) => product.name !== action.payload
+      );
+
+      return {
+        ...state,
+        products: currProducts,
+      };
     default:
       return state;
   }

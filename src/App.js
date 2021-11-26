@@ -1,5 +1,5 @@
 import "./App.css";
-import Table from "./components/Table";
+import Table from "./components/Table/Table";
 import { useSelector } from "react-redux";
 
 const App = () => {
@@ -9,7 +9,7 @@ const App = () => {
 
   return (
     <>
-      <div>Hello</div>
+      <h1>Hello Table</h1>
       <Table data={data} />
     </>
   );
