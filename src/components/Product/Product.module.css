@@ -1,5 +1,6 @@
 .row_item {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   font-weight: 500;
   border-bottom: 1px solid rgba(121, 117, 117, 0.336);
@@ -16,6 +17,19 @@
   text-decoration: underline;
   cursor: pointer;
   color: rgb(48, 17, 228);
+}
+
+.row_item_count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  margin-right: 10px;
+  border: 1px solid rgba(95, 94, 94, 0.623);
+  padding: 5px;
+  border-radius: 25px;
+  background-color: rgba(90, 86, 86, 0.657);
+  color: white;
 }
 
 .row_item_price {

@@ -18,11 +18,14 @@ const Product = (props) => {
   return (
     <Row className={classes.row}>
       <Col span={12}>
-        <div
-          className={`${classes.row_item} ${classes.row_item_name}`}
-          onClick={() => productInfo(product)}
-        >
-          {product.name}
+        <div className={classes.row_item}>
+          <div
+            className={classes.row_item_name}
+            onClick={() => productInfo(product)}
+          >
+            {product.name}
+          </div>
+          <div className={classes.row_item_count}>{product.count}</div>
         </div>
       </Col>
       <Col span={5}>

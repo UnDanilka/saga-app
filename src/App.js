@@ -1,4 +1,4 @@
-import "./App.css";
+import classes from "./App.module.css";
 import Table from "./components/Table/Table";
 import { useSelector } from "react-redux";
 
@@ -8,10 +8,9 @@ const App = () => {
   console.log("data", data);
 
   return (
-    <>
-      <h1>Hello Table</h1>
+    <div className={classes.main_app}>
       <Table data={data} />
-    </>
+    </div>
   );
 };
 
