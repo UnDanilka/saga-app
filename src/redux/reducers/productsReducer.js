@@ -26,7 +26,7 @@ export const productsReducer = (state = initialState, action) => {
     case "delete":
       const prevProducts = [...state.products];
       const currProducts = prevProducts.filter(
-        (product) => product.name !== action.payload
+        (product) => product.id !== action.payload
       );
 
       return {

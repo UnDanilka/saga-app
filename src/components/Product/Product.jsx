@@ -11,8 +11,8 @@ const Product = (props) => {
 
   const dispatch = useDispatch();
 
-  const handleDeleteProduct = (name) => {
-    dispatch(deleteProduct(name));
+  const handleDeleteProduct = (id) => {
+    dispatch(deleteProduct(id));
   };
 
   return (
@@ -35,7 +35,7 @@ const Product = (props) => {
           <Button type="primary">Edit</Button>
 
           <Button
-            onClick={() => confirmDeleting(product.name, handleDeleteProduct)}
+            onClick={() => confirmDeleting(product.id, handleDeleteProduct)}
             type="primary"
             danger
           >

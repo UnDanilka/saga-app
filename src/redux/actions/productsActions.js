@@ -18,9 +18,9 @@ export const failProducts = (error) => {
   };
 };
 
-export const deleteProduct = (name) => {
+export const deleteProduct = (id) => {
   return {
     type: "delete",
-    payload: name,
+    payload: id,
   };
 };
