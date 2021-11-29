@@ -5,7 +5,7 @@
       "name": "first",
       "email": "first@gmail.com",
       "count": 1,
-      "price": 10,
+      "price": 10000,
       "delivery": { "country": "Russia", "cities": ["Kazan"] }
     },
     {
@@ -13,7 +13,7 @@
       "name": "second",
       "email": "second@gmail.com",
       "count": 2,
-      "price": 20,
+      "price": 20000,
       "delivery": { "country": "Russia", "cities": ["Moscow"] }
     },
     {
@@ -21,7 +21,7 @@
       "name": "fifth",
       "email": "fifth@gmail.com",
       "count": 5,
-      "price": 50,
+      "price": 50000,
       "delivery": null
     },
     {
@@ -29,7 +29,7 @@
       "name": "third",
       "email": "third@gmail.com",
       "count": 3,
-      "price": 30,
+      "price": 30000,
       "delivery": { "country": "Russia", "cities": ["Saratov, Samara"] }
     },
     {
@@ -37,7 +37,7 @@
       "name": "fourth",
       "email": "fourth@gmail.com",
       "count": 4,
-      "price": 40,
+      "price": 40000,
       "delivery": null
     }
   ]

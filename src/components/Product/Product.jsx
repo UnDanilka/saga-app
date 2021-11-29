@@ -7,12 +7,18 @@ import { useDispatch } from "react-redux";
 import { deleteProduct } from "../../redux/actions/productsActions";
 
 const Product = (props) => {
-  const { product } = props;
+  const { product, setEditModal } = props;
 
   const dispatch = useDispatch();
 
   const handleDeleteProduct = (id) => {
     dispatch(deleteProduct(id));
+  };
+
+  const handleEdit = () => {
+    setEditModal((prev) => {
+      return { product, visible: true };
+    });
   };
 
   return (
@@ -30,12 +36,14 @@ const Product = (props) => {
       </Col>
       <Col span={5}>
         <div className={`${classes.row_item} ${classes.row_item_price}`}>
-          {product.price}
+          {product.price.toLocaleString("ru")} $
         </div>
       </Col>
       <Col span={7}>
         <div className={`${classes.row_item} ${classes.row_item_actions}`}>
-          <Button type="primary">Edit</Button>
+          <Button type="primary" onClick={handleEdit}>
+            Edit
+          </Button>
 
           <Button
             onClick={() => confirmDeleting(product.id, handleDeleteProduct)}

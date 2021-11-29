@@ -3,12 +3,18 @@ import classes from "./Table.module.css";
 import Product from "../Product/Product";
 import Search from "../Search/Search";
 import Header from "../Header/Header";
+import { Button } from "antd";
+import EditAddModal from "../Modal/EditAddModal";
 
 const Table = (props) => {
   const { products } = props.data;
   const [productsState, setProductsState] = useState(products);
   const [sorting, setSorting] = useState({ name: null, price: null });
   const [searchValue, setSearchValue] = useState("");
+  const [editModal, setEditModal] = useState({
+    visible: false,
+    products: null,
+  });
 
   useEffect(() => {
     setProductsState(products.filter((p) => p.name.includes(searchValue)));
@@ -49,19 +55,37 @@ const Table = (props) => {
     });
   }, [products, searchValue, sorting]);
 
+  const handleAdd = () => {
+    setEditModal((prev) => {
+      return { product: null, visible: true };
+    });
+  };
+
   return (
     <div style={{ overflow: "auto" }}>
       <div className={classes.main_table}>
-        <Search
-          products={products}
-          setProductsState={setProductsState}
-          searchValue={searchValue}
-          setSearchValue={setSearchValue}
-        />
+        <div className={classes.widgets}>
+          <Search
+            products={products}
+            setProductsState={setProductsState}
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+          />
+          <Button type="primary" onClick={handleAdd}>
+            Add new
+          </Button>
+        </div>
         <Header sorting={sorting} setSorting={setSorting} />
         {productsState.map((product, index) => {
-          return <Product product={product} key={index} />;
+          return (
+            <Product
+              product={product}
+              key={index}
+              setEditModal={setEditModal}
+            />
+          );
         })}
+        <EditAddModal editModal={editModal} setEditModal={setEditModal} />
       </div>
     </div>
   );
