@@ -1,0 +1,26 @@
+.delivery_wrapper {
+  margin-bottom: 20px;
+}
+
+.delivery_label {
+  margin-bottom: 10px;
+}
+
+.delivery_boxes {
+  display: flex;
+  height: 130px;
+}
+
+.delivery_radio {
+  border: 1px solid rgba(122, 120, 120, 0.671);
+  margin-left: 35px;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.delivery_checkbox {
+  border: 1px solid rgba(122, 120, 120, 0.671);
+  margin-left: 35px;
+  padding: 10px;
+  border-radius: 15px;
+}
