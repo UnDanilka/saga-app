@@ -13,21 +13,79 @@ import {
   Divider,
 } from "antd";
 import classes from "./EditAddModal.module.css";
+import { v4 as uuidv4 } from "uuid";
+import { useDispatch } from "react-redux";
+import { addProduct, updateProduct } from "../../redux/actions/productsActions";
 
 const EditAddModal = ({ editModal, setEditModal }) => {
+  const [form] = Form.useForm();
+  const dispatch = useDispatch();
   const { Option } = Select;
-  const [deliveryType, setDeliveryType] = useState("");
-  const [country, setCountry] = useState("");
+  const [deliveryType, setDeliveryType] = useState("noDelivery");
+  const [country, setCountry] = useState({ country: "", init: false });
   const [cities, setCities] = useState([]);
+  const [checkedCities, setCheckedCities] = useState([]);
+  const [deliveryError, setDeliveryError] = useState(false);
 
-  const handleOk = () => {
+  const handleCancel = () => {
     setEditModal((prev) => {
       return { product: null, visible: false };
     });
+    clearDelivery();
+    form.resetFields();
+  };
+
+  useEffect(() => {
+    form.setFieldsValue({
+      name: editModal.product?.name,
+      email: editModal.product?.email,
+      count: editModal.product?.count,
+      price: editModal.product?.price,
+    });
+    if (editModal.product?.delivery) {
+      setDeliveryType("city");
+      setCountry({ country: editModal.product?.delivery?.country, init: true });
+      setCheckedCities(editModal.product?.delivery.cities);
+    }
+  }, [editModal, form]);
+
+  const clearDelivery = () => {
+    setDeliveryType("noDelivery");
+    setCountry({ country: "", init: false });
+    setCities([]);
+    setCheckedCities([]);
+    setDeliveryError(false);
   };
 
   const formFinish = (props) => {
-    console.log(props);
+    if (deliveryError) {
+      return;
+    } else {
+      let data = [];
+
+      if (country.country) {
+        data = {
+          ...props,
+          delivery: { country: country.country, cities: checkedCities },
+        };
+      } else {
+        data = { ...props, delivery: null };
+      }
+
+      if (editModal.product) {
+        data = { ...editModal.product, ...data };
+        dispatch(updateProduct(data));
+      } else {
+        data = { ...data, id: uuidv4() };
+        dispatch(addProduct(data));
+      }
+      form.resetFields();
+
+      setEditModal((prev) => {
+        return { product: null, visible: false };
+      });
+      clearDelivery();
+    }
   };
 
   const handleChangeDelivery = (props) => {
@@ -35,7 +93,7 @@ const EditAddModal = ({ editModal, setEditModal }) => {
   };
 
   const handleChangeCountry = (props) => {
-    setCountry(props.target.value);
+    setCountry({ country: props.target.value, init: false });
   };
 
   useEffect(() => {
@@ -43,7 +101,8 @@ const EditAddModal = ({ editModal, setEditModal }) => {
   }, [deliveryType]);
 
   useEffect(() => {
-    switch (country) {
+    if (!country.init) setCheckedCities([]);
+    switch (country.country) {
       case "russia":
         setCities(["moscow", "kazan", "saratov"]);
         break;
@@ -65,17 +124,36 @@ const EditAddModal = ({ editModal, setEditModal }) => {
   };
 
   const handleChecboxChange = (props) => {
-    console.log(props);
+    setCheckedCities([...props]);
   };
 
+  const handleCheckAllChange = (e) => {
+    setCheckedCities(e.target.checked ? cities : []);
+  };
+
+  useEffect(() => {
+    if (deliveryType !== "noDelivery") {
+      if (country.country) {
+        if (checkedCities.length === 0) {
+          setDeliveryError(true);
+        } else {
+          setDeliveryError(false);
+        }
+      }
+    } else {
+      setDeliveryError(false);
+    }
+  }, [checkedCities.length, country, deliveryType]);
+
   return (
-    <Modal title="Basic Modal" visible={editModal.visible} onOk={handleOk}>
-      <Form
-        initialValues={{ remember: true }}
-        autoComplete="off"
-        layout="vertical"
-        onFinish={formFinish}
-      >
+    <Modal
+      forceRender
+      visible={editModal.visible}
+      onCancel={handleCancel}
+      footer=""
+      centered
+    >
+      <Form layout="vertical" onFinish={formFinish} form={form}>
         <Form.Item
           label="Name"
           name="name"
@@ -111,19 +189,22 @@ const EditAddModal = ({ editModal, setEditModal }) => {
             <div>
               <Select
                 style={{ width: 150 }}
-                defaultValue="noDelivery"
                 onChange={handleChangeDelivery}
+                value={deliveryType}
               >
                 <Option value="noDelivery">No delivery</Option>
                 <Option value="country">Country</Option>
-                <Option value="city" disabled={!country}>
+                <Option value="city" disabled={!country.country}>
                   City
                 </Option>
               </Select>
             </div>
             {deliveryType === "country" && (
               <div className={classes.delivery_radio}>
-                <Radio.Group onChange={handleChangeCountry} value={country}>
+                <Radio.Group
+                  onChange={handleChangeCountry}
+                  value={country.country}
+                >
                   <Space direction="vertical">
                     <Radio value="russia">Russia</Radio>
                     <Radio value="usa">USA</Radio>
@@ -135,21 +216,23 @@ const EditAddModal = ({ editModal, setEditModal }) => {
             {deliveryType === "city" && (
               <div className={classes.delivery_checkbox}>
                 <Checkbox
-                // indeterminate={indeterminate}
-                // onChange={onCheckAllChange}
-                // checked={checkAll}
+                  indeterminate={
+                    checkedCities.length !== 0 &&
+                    checkedCities.length !== cities.length
+                  }
+                  onChange={handleCheckAllChange}
+                  checked={cities.length === checkedCities.length}
                 >
                   Check all
                 </Checkbox>
                 <Divider style={{ margin: "8px 0" }} />
                 <Checkbox.Group
-                  style={{ display: "block" }}
                   onChange={handleChecboxChange}
-                  value={[]}
+                  value={checkedCities}
                 >
-                  {cities.map((city) => {
+                  {cities.map((city, i) => {
                     return (
-                      <Row>
+                      <Row key={i}>
                         <Checkbox value={city}>{ucFirst(city)}</Checkbox>
                       </Row>
                     );
@@ -158,9 +241,17 @@ const EditAddModal = ({ editModal, setEditModal }) => {
               </div>
             )}
           </div>
+          <div className={classes.delivery_error_wrapper}>
+            {deliveryError && (
+              <div className={classes.delivery_error}>
+                Please select the cities!
+              </div>
+            )}
+          </div>
         </div>
+
         <Button type="primary" htmlType="submit">
-          Add/Update
+          {editModal.product ? "UPDATE" : "ADD"}
         </Button>
       </Form>
     </Modal>

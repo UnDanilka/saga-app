@@ -24,3 +24,11 @@
   padding: 10px;
   border-radius: 15px;
 }
+
+.delivery_error {
+  color: red;
+}
+
+.delivery_error_wrapper {
+  height: 22px;
+}

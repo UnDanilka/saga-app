@@ -24,7 +24,5 @@ const fetchProducts = async () => {
     return res.json();
   });
 
-  console.log(data);
-
   return data;
 };

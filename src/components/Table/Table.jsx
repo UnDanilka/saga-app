@@ -5,6 +5,7 @@ import Search from "../Search/Search";
 import Header from "../Header/Header";
 import { Button } from "antd";
 import EditAddModal from "../Modal/EditAddModal";
+import { CloseCircleTwoTone } from "@ant-design/icons";
 
 const Table = (props) => {
   const { products } = props.data;
@@ -17,12 +18,8 @@ const Table = (props) => {
   });
 
   useEffect(() => {
-    setProductsState(products.filter((p) => p.name.includes(searchValue)));
+    setProductsState(products?.filter((p) => p.name.includes(searchValue)));
   }, [products]);
-
-  useEffect(() => {
-    console.log("productsState", productsState);
-  }, [productsState]);
 
   const setSortedValue = (exp) => {
     setProductsState((prev) => {
@@ -51,7 +48,7 @@ const Table = (props) => {
       return;
     }
     setProductsState(() => {
-      return products.filter((p) => p.name.includes(searchValue));
+      return products?.filter((p) => p.name.includes(searchValue));
     });
   }, [products, searchValue, sorting]);
 
@@ -62,8 +59,8 @@ const Table = (props) => {
   };
 
   return (
-    <div style={{ overflow: "auto" }}>
-      <div className={classes.main_table}>
+    <div className={classes.table_overflow_wrapper}>
+      <div className={classes.table_main}>
         <div className={classes.widgets}>
           <Search
             products={products}
@@ -76,15 +73,25 @@ const Table = (props) => {
           </Button>
         </div>
         <Header sorting={sorting} setSorting={setSorting} />
-        {productsState.map((product, index) => {
-          return (
-            <Product
-              product={product}
-              key={index}
-              setEditModal={setEditModal}
+        {productsState.length > 0 ? (
+          productsState?.map((product, index) => {
+            return (
+              <Product
+                product={product}
+                key={index}
+                setEditModal={setEditModal}
+              />
+            );
+          })
+        ) : (
+          <div className={classes.noData_wrapper}>
+            <CloseCircleTwoTone
+              className={classes.noData_icon}
+              twoToneColor="#eb2f96"
             />
-          );
-        })}
+            <div className={classes.noData_text}>No data yet:(</div>
+          </div>
+        )}
         <EditAddModal editModal={editModal} setEditModal={setEditModal} />
       </div>
     </div>

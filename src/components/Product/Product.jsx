@@ -29,14 +29,14 @@ const Product = (props) => {
             className={classes.row_item_name}
             onClick={() => productInfo(product)}
           >
-            {product.name}
+            {product.name || ""}
           </div>
           <div className={classes.row_item_count}>{product.count}</div>
         </div>
       </Col>
       <Col span={5}>
         <div className={`${classes.row_item} ${classes.row_item_price}`}>
-          {product.price.toLocaleString("ru")} $
+          {product.price?.toLocaleString("ru") || ""} $
         </div>
       </Col>
       <Col span={7}>

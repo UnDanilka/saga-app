@@ -1,4 +1,8 @@
-.main_table {
+.table_overflow_wrapper {
+  overflow: auto;
+}
+
+.table_main {
   padding: 20px;
   min-width: 500px;
 }
@@ -6,4 +10,20 @@
 .widgets {
   display: flex;
   justify-content: space-between;
+}
+
+.noData_wrapper {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.noData_icon {
+  font-size: 50px;
+}
+.noData_text {
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 20px;
 }

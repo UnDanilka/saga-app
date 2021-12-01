@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Input } from "antd";
+import classes from "./Search.module.css";
 
 const Search = ({
   products,
@@ -15,13 +16,13 @@ const Search = ({
 
   useEffect(() => {
     setProductsState(() => {
-      const newProducts = products.filter((p) => p.name.includes(searchValue));
+      const newProducts = products?.filter((p) => p.name.includes(searchValue));
       return newProducts;
     });
   }, [products, searchValue, setProductsState]);
 
   return (
-    <div style={{ marginBottom: "20px" }}>
+    <div className={classes.search_wrapper}>
       <Search
         style={{ width: 300 }}
         placeholder="input search text"

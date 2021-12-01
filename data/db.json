@@ -6,7 +6,7 @@
       "email": "first@gmail.com",
       "count": 1,
       "price": 10000,
-      "delivery": { "country": "Russia", "cities": ["Kazan"] }
+      "delivery": { "country": "russia", "cities": ["kazan"] }
     },
     {
       "id": 2,
@@ -14,7 +14,7 @@
       "email": "second@gmail.com",
       "count": 2,
       "price": 20000,
-      "delivery": { "country": "Russia", "cities": ["Moscow"] }
+      "delivery": { "country": "russia", "cities": ["moscow"] }
     },
     {
       "id": 5,
@@ -30,7 +30,7 @@
       "email": "third@gmail.com",
       "count": 3,
       "price": 30000,
-      "delivery": { "country": "Russia", "cities": ["Saratov, Samara"] }
+      "delivery": { "country": "russia", "cities": ["saratov", "kazan"] }
     },
     {
       "id": 4,

@@ -1,26 +1,42 @@
+import { REQUEST, SUCCESS, FAIL, DELETE, UPDATE, ADD } from "../types";
+
 export const requestProducts = () => {
   return {
-    type: "request",
+    type: REQUEST,
   };
 };
 
 export const successProducts = (products) => {
   return {
-    type: "success",
+    type: SUCCESS,
     payload: products,
   };
 };
 
 export const failProducts = (error) => {
   return {
-    type: "fail",
+    type: FAIL,
     payload: error,
   };
 };
 
 export const deleteProduct = (id) => {
   return {
-    type: "delete",
+    type: DELETE,
     payload: id,
+  };
+};
+
+export const updateProduct = (product) => {
+  return {
+    type: UPDATE,
+    payload: product,
+  };
+};
+
+export const addProduct = (newProduct) => {
+  return {
+    type: ADD,
+    payload: newProduct,
   };
 };
