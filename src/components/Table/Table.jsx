@@ -6,9 +6,10 @@ import Header from "../Header/Header";
 import { Button } from "antd";
 import EditAddModal from "../Modal/EditAddModal";
 import { CloseCircleTwoTone } from "@ant-design/icons";
+import Loading from "../Loading/Loading";
 
 const Table = (props) => {
-  const { products } = props.data;
+  const { products, loading } = props.data;
   const [productsState, setProductsState] = useState(products);
   const [sorting, setSorting] = useState({ name: null, price: null });
   const [searchValue, setSearchValue] = useState("");
@@ -73,7 +74,9 @@ const Table = (props) => {
           </Button>
         </div>
         <Header sorting={sorting} setSorting={setSorting} />
-        {productsState.length > 0 ? (
+        {loading ? (
+          <Loading />
+        ) : productsState.length > 0 ? (
           productsState?.map((product, index) => {
             return (
               <Product
@@ -92,6 +95,7 @@ const Table = (props) => {
             <div className={classes.noData_text}>No data yet:(</div>
           </div>
         )}
+
         <EditAddModal editModal={editModal} setEditModal={setEditModal} />
       </div>
     </div>

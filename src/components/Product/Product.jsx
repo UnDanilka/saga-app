@@ -31,12 +31,12 @@ const Product = (props) => {
           >
             {product.name || ""}
           </div>
-          <div className={classes.row_item_count}>{product.count}</div>
+          <div className={classes.row_item_count}>{product.count || 0}</div>
         </div>
       </Col>
       <Col span={5}>
         <div className={`${classes.row_item} ${classes.row_item_price}`}>
-          {product.price?.toLocaleString("ru") || ""} $
+          {product.price?.toLocaleString("ru") || 0} $
         </div>
       </Col>
       <Col span={7}>

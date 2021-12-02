@@ -3,16 +3,16 @@ import { Modal } from "antd";
 const productInfo = (product) => {
   const info = (
     <div>
-      <div>Name: {product.name}</div>
-      <div>Email: {product.email}</div>
-      <div>Amount: {product.count}</div>
-      <div>Price: {product.price}</div>
+      <div>Name: {product.name || "No Data"} </div>
+      <div>Email: {product.email || "No Data"}</div>
+      <div>Amount: {product.count || "No Data"}</div>
+      <div>Price: {product.price || "No Data"} $</div>
       <div>
         Delivery:
         {product.delivery
-          ? `${product.delivery.country}, ${product.delivery.cities.join(
-              ","
-            )}  `
+          ? ` Country: ${
+              product.delivery.country
+            }, Cities: ${product.delivery.cities.join(",")}  `
           : "No delivery"}
       </div>
     </div>
