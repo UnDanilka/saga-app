@@ -2,6 +2,7 @@ import classes from "./App.module.css";
 import Table from "./components/Table/Table";
 import { useSelector } from "react-redux";
 import { Divider } from "antd";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 const App = () => {
   const data = useSelector((store) => store.productsReducer);
