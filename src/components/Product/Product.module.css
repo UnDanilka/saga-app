@@ -13,12 +13,6 @@
   padding-left: 10px;
 }
 
-.row_item_name:hover {
-  text-decoration: underline;
-  cursor: pointer;
-  color: rgb(48, 17, 228);
-}
-
 .row_item_count {
   display: flex;
   justify-content: center;

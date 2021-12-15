@@ -3,6 +3,7 @@ import { Row, Col, Button } from "antd";
 import classes from "./Product.module.css";
 import confirmDeleting from "../Modal/confirmDeleting";
 import productInfo from "../Modal/productInfo";
+import { Link, Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteProduct } from "../../redux/actions/productsActions";
 
@@ -25,12 +26,9 @@ const Product = (props) => {
     <Row className={classes.row}>
       <Col span={12}>
         <div className={classes.row_item}>
-          <div
-            className={classes.row_item_name}
-            onClick={() => productInfo(product)}
-          >
+          <Link to={`info/${product.id}`} className={classes.row_item_name}>
             {product.name || ""}
-          </div>
+          </Link>
           <div className={classes.row_item_count}>{product.count || 0}</div>
         </div>
       </Col>
@@ -54,6 +52,9 @@ const Product = (props) => {
           </Button>
         </div>
       </Col>
+      <Routes>
+        <Route path="info/:id" element={() => productInfo(product)} />
+      </Routes>
     </Row>
   );
 };
