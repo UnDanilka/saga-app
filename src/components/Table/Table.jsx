@@ -7,6 +7,8 @@ import { Button } from "antd";
 import EditAddModal from "../Modal/EditAddModal";
 import { CloseCircleTwoTone } from "@ant-design/icons";
 import Loading from "../Loading/Loading";
+import { Routes, Route } from "react-router-dom";
+import ModalInfo from "../Modal/ModalInfo";
 
 const Table = (props) => {
   const { products, loading } = props.data;
@@ -97,6 +99,12 @@ const Table = (props) => {
         )}
 
         <EditAddModal editModal={editModal} setEditModal={setEditModal} />
+        <Routes>
+          <Route
+            path="info/:id"
+            element={<ModalInfo productsState={productsState} />}
+          />
+        </Routes>
       </div>
     </div>
   );

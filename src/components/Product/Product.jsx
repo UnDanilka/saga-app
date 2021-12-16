@@ -2,8 +2,7 @@ import React from "react";
 import { Row, Col, Button } from "antd";
 import classes from "./Product.module.css";
 import confirmDeleting from "../Modal/confirmDeleting";
-import productInfo from "../Modal/productInfo";
-import { Link, Routes, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteProduct } from "../../redux/actions/productsActions";
 
@@ -52,9 +51,6 @@ const Product = (props) => {
           </Button>
         </div>
       </Col>
-      <Routes>
-        <Route path="info/:id" element={() => productInfo(product)} />
-      </Routes>
     </Row>
   );
 };
