@@ -10,13 +10,18 @@ const ModalInfo = ({ productsState }) => {
 
   useEffect(() => {
     const currentProduct = productsState.find((product) => {
-      return product.id === +params.id;
+      return product.id.toString() === params.id;
     });
     setProduct(currentProduct);
   }, [params.id, productsState]);
 
   return (
-    <Modal visible title="ProductInfo" footer="" onCancel={() => navigate("/")}>
+    <Modal
+      visible
+      title="Product info"
+      footer=""
+      onCancel={() => navigate("/")}
+    >
       <div>
         <div>Name: {product?.name || "No Data"} </div>
         <div>Email: {product?.email || "No Data"}</div>

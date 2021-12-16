@@ -9,20 +9,22 @@ import { CloseCircleTwoTone } from "@ant-design/icons";
 import Loading from "../Loading/Loading";
 import { Routes, Route } from "react-router-dom";
 import ModalInfo from "../Modal/ModalInfo";
+import { useNavigate } from "react-router-dom";
 
 const Table = (props) => {
+  const navigate = useNavigate();
   const { products, loading } = props.data;
   const [productsState, setProductsState] = useState(products);
   const [sorting, setSorting] = useState({ name: null, price: null });
   const [searchValue, setSearchValue] = useState("");
-  const [editModal, setEditModal] = useState({
-    visible: false,
-    products: null,
-  });
 
   useEffect(() => {
     setProductsState(products?.filter((p) => p.name.includes(searchValue)));
   }, [products]);
+
+  useEffect(() => {
+    console.log("productsState", productsState);
+  }, [productsState]);
 
   const setSortedValue = (exp) => {
     setProductsState((prev) => {
@@ -56,9 +58,7 @@ const Table = (props) => {
   }, [products, searchValue, sorting]);
 
   const handleAdd = () => {
-    setEditModal((prev) => {
-      return { product: null, visible: true };
-    });
+    navigate("add");
   };
 
   return (
@@ -80,13 +80,7 @@ const Table = (props) => {
           <Loading />
         ) : productsState.length > 0 ? (
           productsState?.map((product, index) => {
-            return (
-              <Product
-                product={product}
-                key={index}
-                setEditModal={setEditModal}
-              />
-            );
+            return <Product product={product} key={index} />;
           })
         ) : (
           <div className={classes.noData_wrapper}>
@@ -98,11 +92,18 @@ const Table = (props) => {
           </div>
         )}
 
-        <EditAddModal editModal={editModal} setEditModal={setEditModal} />
         <Routes>
           <Route
             path="info/:id"
             element={<ModalInfo productsState={productsState} />}
+          />
+          <Route
+            path="edit/:id"
+            element={<EditAddModal productsState={productsState} />}
+          />
+          <Route
+            path="add"
+            element={<EditAddModal productsState={productsState} />}
           />
         </Routes>
       </div>

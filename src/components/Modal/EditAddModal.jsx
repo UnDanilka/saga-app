@@ -16,8 +16,9 @@ import classes from "./EditAddModal.module.css";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch } from "react-redux";
 import { addProduct, updateProduct } from "../../redux/actions/productsActions";
+import { useParams, useNavigate } from "react-router-dom";
 
-const EditAddModal = ({ editModal, setEditModal }) => {
+const EditAddModal = ({ productsState }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const { Option } = Select;
@@ -26,28 +27,47 @@ const EditAddModal = ({ editModal, setEditModal }) => {
   const [cities, setCities] = useState([]);
   const [checkedCities, setCheckedCities] = useState([]);
   const [deliveryError, setDeliveryError] = useState(false);
+  const [product, setProduct] = useState({});
+
+  const navigate = useNavigate();
+  const params = useParams();
+
+  useEffect(() => {
+    const currentProduct = productsState.find((product) => {
+      return product.id === +params.id;
+    });
+    setProduct(currentProduct);
+  }, [params.id, productsState]);
 
   const handleCancel = () => {
-    setEditModal((prev) => {
-      return { product: null, visible: false };
-    });
+    navigate("/");
     clearDelivery();
     form.resetFields();
   };
 
   useEffect(() => {
     form.setFieldsValue({
-      name: editModal.product?.name,
-      email: editModal.product?.email,
-      count: editModal.product?.count,
-      price: editModal.product?.price,
+      name: product?.name,
+      email: product?.email,
+      count: product?.count,
+      price: product?.price,
     });
-    if (editModal.product?.delivery) {
+    if (product?.delivery) {
+      console.log("cities", product.delivery.cities);
       setDeliveryType("city");
-      setCountry({ country: editModal.product?.delivery?.country, init: true });
-      setCheckedCities(editModal.product?.delivery.cities);
+      setCountry({ country: product?.delivery?.country, init: true });
+      setCheckedCities(product?.delivery.cities);
     }
-  }, [editModal, form]);
+    console.log("product", product);
+  }, [product, form]);
+
+  useEffect(() => {
+    console.log("checkedCities", checkedCities);
+  }, [checkedCities]);
+
+  useEffect(() => {
+    console.log("country", country);
+  }, [country]);
 
   const clearDelivery = () => {
     setDeliveryType("noDelivery");
@@ -72,8 +92,8 @@ const EditAddModal = ({ editModal, setEditModal }) => {
         data = { ...props, delivery: null };
       }
 
-      if (editModal.product) {
-        data = { ...editModal.product, ...data };
+      if (product) {
+        data = { ...product, ...data };
         dispatch(updateProduct(data));
       } else {
         data = { ...data, id: uuidv4() };
@@ -81,9 +101,7 @@ const EditAddModal = ({ editModal, setEditModal }) => {
       }
       form.resetFields();
 
-      setEditModal((prev) => {
-        return { product: null, visible: false };
-      });
+      navigate("/");
       clearDelivery();
     }
   };
@@ -101,7 +119,11 @@ const EditAddModal = ({ editModal, setEditModal }) => {
   }, [deliveryType]);
 
   useEffect(() => {
-    if (!country.init) setCheckedCities([]);
+    if (country) {
+      if (!country.init) {
+        setCheckedCities([]);
+      }
+    }
     switch (country.country) {
       case "russia":
         setCities(["moscow", "kazan", "saratov"]);
@@ -146,13 +168,7 @@ const EditAddModal = ({ editModal, setEditModal }) => {
   }, [checkedCities.length, country, deliveryType]);
 
   return (
-    <Modal
-      forceRender
-      visible={editModal.visible}
-      onCancel={handleCancel}
-      footer=""
-      centered
-    >
+    <Modal forceRender visible onCancel={handleCancel} footer="" centered>
       <Form layout="vertical" onFinish={formFinish} form={form}>
         <Form.Item
           label="Name"
@@ -251,7 +267,7 @@ const EditAddModal = ({ editModal, setEditModal }) => {
         </div>
 
         <Button type="primary" htmlType="submit">
-          {editModal.product ? "UPDATE" : "ADD"}
+          {product ? "UPDATE" : "ADD"}
         </Button>
       </Form>
     </Modal>
