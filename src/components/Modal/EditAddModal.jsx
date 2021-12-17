@@ -53,21 +53,11 @@ const EditAddModal = ({ productsState }) => {
       price: product?.price,
     });
     if (product?.delivery) {
-      console.log("cities", product.delivery.cities);
       setDeliveryType("city");
       setCountry({ country: product?.delivery?.country, init: true });
       setCheckedCities(product?.delivery.cities);
     }
-    console.log("product", product);
   }, [product, form]);
-
-  useEffect(() => {
-    console.log("checkedCities", checkedCities);
-  }, [checkedCities]);
-
-  useEffect(() => {
-    console.log("country", country);
-  }, [country]);
 
   const clearDelivery = () => {
     setDeliveryType("noDelivery");

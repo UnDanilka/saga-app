@@ -9,10 +9,11 @@ import { CloseCircleTwoTone } from "@ant-design/icons";
 import Loading from "../Loading/Loading";
 import { Routes, Route } from "react-router-dom";
 import ModalInfo from "../Modal/ModalInfo";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Table = (props) => {
   const navigate = useNavigate();
+  const params = useParams();
   const { products, loading } = props.data;
   const [productsState, setProductsState] = useState(products);
   const [sorting, setSorting] = useState({ name: null, price: null });
@@ -23,8 +24,12 @@ const Table = (props) => {
   }, [products]);
 
   useEffect(() => {
-    console.log("productsState", productsState);
-  }, [productsState]);
+    const paramsFilter = params["*"].split("/");
+    if (paramsFilter[0] === "filter") {
+      setSearchValue(paramsFilter[1]);
+      if (!paramsFilter[1]) navigate("/");
+    }
+  }, [navigate, params]);
 
   const setSortedValue = (exp) => {
     setProductsState((prev) => {
