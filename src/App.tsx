@@ -3,9 +3,10 @@ import Table from "./components/Table/Table";
 import { useSelector } from "react-redux";
 import { Divider } from "antd";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { IStore } from "./Interfaces";
 
 const App = () => {
-  const data = useSelector((store) => store.productsReducer);
+  const data = useSelector((store: IStore) => store.productsReducer);
 
   return (
     <Router>

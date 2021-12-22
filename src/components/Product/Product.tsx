@@ -6,14 +6,15 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteProduct } from "../../redux/actions/productsActions";
 import { useNavigate } from "react-router-dom";
+import { IProductProps } from "../../Interfaces";
 
-const Product = (props) => {
+const Product = (props: IProductProps) => {
   const navigate = useNavigate();
   const { product } = props;
 
   const dispatch = useDispatch();
 
-  const handleDeleteProduct = (id) => {
+  const handleDeleteProduct = (id: number) => {
     dispatch(deleteProduct(id));
   };
 

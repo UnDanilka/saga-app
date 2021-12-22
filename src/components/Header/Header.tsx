@@ -2,9 +2,15 @@ import React from "react";
 import { Row, Col } from "antd";
 import { CaretUpOutlined, CaretDownOutlined } from "@ant-design/icons";
 import classes from "./Header.module.css";
+import { ISorting } from "../../Interfaces";
 
-const Header = ({ sorting, setSorting }) => {
-  const getSortingIcon = (col) => {
+interface IHeader {
+  sorting: ISorting;
+  setSorting: React.Dispatch<React.SetStateAction<ISorting>>;
+}
+
+const Header = ({ sorting, setSorting }: IHeader) => {
+  const getSortingIcon = (col: "price" | "name") => {
     if (sorting[col]) {
       if (sorting[col] === "asc") {
         return (
@@ -24,7 +30,7 @@ const Header = ({ sorting, setSorting }) => {
     }
   };
 
-  const handleSorting = (col) => {
+  const handleSorting = (col: "price" | "name") => {
     const initSort = { name: null, price: null };
 
     setSorting((prev) => {

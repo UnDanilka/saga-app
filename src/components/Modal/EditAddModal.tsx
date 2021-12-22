@@ -11,30 +11,40 @@ import {
   Checkbox,
   Row,
   Divider,
+  RadioChangeEvent,
 } from "antd";
 import classes from "./EditAddModal.module.css";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch } from "react-redux";
 import { addProduct, updateProduct } from "../../redux/actions/productsActions";
 import { useParams, useNavigate } from "react-router-dom";
+import { IModalProps, productType } from "../../Interfaces";
+import { CheckboxChangeEvent } from "antd/lib/checkbox";
+import { CheckboxValueType } from "antd/lib/checkbox/Group";
 
-const EditAddModal = ({ productsState }) => {
+const EditAddModal = ({ productsState }: IModalProps) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const { Option } = Select;
   const [deliveryType, setDeliveryType] = useState("noDelivery");
-  const [country, setCountry] = useState({ country: "", init: false });
-  const [cities, setCities] = useState([]);
-  const [checkedCities, setCheckedCities] = useState([]);
+  const [country, setCountry] = useState<{ country: string; init: boolean }>({
+    country: "",
+    init: false,
+  });
+  const [cities, setCities] = useState<string[]>([]);
+  const [checkedCities, setCheckedCities] = useState<CheckboxValueType[]>([]);
   const [deliveryError, setDeliveryError] = useState(false);
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState<productType>(undefined);
 
   const navigate = useNavigate();
   const params = useParams();
 
   useEffect(() => {
-    const currentProduct = productsState.find((product) => {
-      return product.id === +params.id;
+    console.log("productsState", productsState);
+    const currentProduct: productType = productsState.find((product) => {
+      const id: string | undefined = params.id;
+      if (id) return product.id.toString() === id;
+      return undefined;
     });
     setProduct(currentProduct);
   }, [params.id, productsState]);
@@ -67,7 +77,7 @@ const EditAddModal = ({ productsState }) => {
     setDeliveryError(false);
   };
 
-  const formFinish = (props) => {
+  const formFinish = (props: any) => {
     if (deliveryError) {
       return;
     } else {
@@ -96,16 +106,16 @@ const EditAddModal = ({ productsState }) => {
     }
   };
 
-  const handleChangeDelivery = (props) => {
+  const handleChangeDelivery = (props: string) => {
     setDeliveryType(props);
   };
 
-  const handleChangeCountry = (props) => {
-    setCountry({ country: props.target.value, init: false });
+  const handleChangeCountry = (e: RadioChangeEvent) => {
+    setCountry({ country: e.target.value, init: false });
   };
 
   useEffect(() => {
-    if (deliveryType === "noDelivery") setCountry("");
+    if (deliveryType === "noDelivery") setCountry({ country: "", init: true });
   }, [deliveryType]);
 
   useEffect(() => {
@@ -129,17 +139,17 @@ const EditAddModal = ({ productsState }) => {
     }
   }, [country]);
 
-  const ucFirst = (str) => {
+  const ucFirst = (str: string) => {
     if (!str) return str;
 
     return str[0].toUpperCase() + str.slice(1);
   };
 
-  const handleChecboxChange = (props) => {
+  const handleChecboxChange = (props: CheckboxValueType[]) => {
     setCheckedCities([...props]);
   };
 
-  const handleCheckAllChange = (e) => {
+  const handleCheckAllChange = (e: CheckboxChangeEvent) => {
     setCheckedCities(e.target.checked ? cities : []);
   };
 

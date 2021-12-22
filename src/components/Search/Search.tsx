@@ -2,18 +2,19 @@ import React, { useEffect, useState } from "react";
 import { Input } from "antd";
 import classes from "./Search.module.css";
 import { useNavigate } from "react-router-dom";
+import { ISearch } from "../../Interfaces";
 
-const Search = ({ products, setProductsState, searchValue }) => {
+const Search = ({ products, setProductsState, searchValue }: ISearch) => {
   const { Search } = Input;
   const navigate = useNavigate();
 
   const [inputValue, setInputValue] = useState("");
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
-  const onSearch = (props) => {
+  const onSearch = (props: string) => {
     navigate(`filter/${props}`);
   };
 

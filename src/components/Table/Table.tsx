@@ -10,13 +10,14 @@ import Loading from "../Loading/Loading";
 import { Routes, Route } from "react-router-dom";
 import ModalInfo from "../Modal/ModalInfo";
 import { useNavigate, useParams } from "react-router-dom";
+import { IProduct, ISorting, ITable } from "../../Interfaces";
 
-const Table = (props) => {
+const Table = (props: ITable) => {
   const navigate = useNavigate();
   const params = useParams();
   const { products, loading } = props.data;
-  const [productsState, setProductsState] = useState(products);
-  const [sorting, setSorting] = useState({ name: null, price: null });
+  const [productsState, setProductsState] = useState<IProduct[]>(products);
+  const [sorting, setSorting] = useState<ISorting>({ name: null, price: null });
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
@@ -24,14 +25,16 @@ const Table = (props) => {
   }, [products]);
 
   useEffect(() => {
-    const paramsFilter = params["*"].split("/");
-    if (paramsFilter[0] === "filter") {
-      setSearchValue(paramsFilter[1]);
-      if (!paramsFilter[1]) navigate("/");
+    const paramsFilter = params["*"]?.split("/");
+    if (paramsFilter) {
+      if (paramsFilter[0] === "filter") {
+        setSearchValue(paramsFilter[1]);
+        if (!paramsFilter[1]) navigate("/");
+      }
     }
   }, [navigate, params]);
 
-  const setSortedValue = (exp) => {
+  const setSortedValue = (exp: string) => {
     setProductsState((prev) => {
       const currProducts = [...prev];
       // eslint-disable-next-line no-eval
@@ -74,7 +77,6 @@ const Table = (props) => {
             products={products}
             setProductsState={setProductsState}
             searchValue={searchValue}
-            setSearchValue={setSearchValue}
           />
           <Button type="primary" onClick={handleAdd}>
             Add new

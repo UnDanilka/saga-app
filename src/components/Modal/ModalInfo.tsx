@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "antd";
 import { useParams, useNavigate } from "react-router-dom";
+import { IModalProps, IProduct } from "../../Interfaces";
 
-const ModalInfo = ({ productsState }) => {
-  const [product, setProduct] = useState({});
+const ModalInfo = ({ productsState }: IModalProps) => {
+  const [product, setProduct] = useState<IProduct | undefined>(undefined);
 
   const navigate = useNavigate();
   const params = useParams();
